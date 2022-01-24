@@ -11,6 +11,8 @@ import { CarService } from './car.service';
 })
 export class AppComponent {
   title = 'carrentalapp';
+  priceSwitch: boolean = true;
+  classSwitch: boolean = true;
 
   public cars: Car[] = [];
   // public editCar: Car;
@@ -22,7 +24,7 @@ export class AppComponent {
   }
 
   public getCars(): void{
-    this.carService.getAllCars().subscribe(
+    this.carService.getAllCars(this.priceSwitch,this.classSwitch).subscribe(
       (response: Car[]) => {
         this.cars = response;
       },
@@ -32,7 +34,36 @@ export class AppComponent {
     )
   }
 
-  public onAddReservation(addForm: NgForm): void{
+  public onAddReservation(addForm: NgForm): void {
+  }
 
+  public onPriceSwitch(event: any): void {
+    console.log(event);
+    this.carService.getAllCars(this.priceSwitch,this.classSwitch).subscribe(
+      (response: Car[]) => {
+        console.log(response);
+        this.cars = response;
+        // addForm.reset();
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+        // addForm.reset();
+      }
+    );
+  }
+
+  public onClassSwitch(event: any): void {
+    console.log(event);
+    this.carService.getAllCars(this.priceSwitch,this.classSwitch).subscribe(
+      (response: Car[]) => {
+        console.log(response);
+        this.cars = response;
+        // addForm.reset();
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+        // addForm.reset();
+      }
+    );
   }
 }

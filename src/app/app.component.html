@@ -34,7 +34,7 @@
       <div class="form-group">
          <label for="class"><b>Car Class</b></label>
          <!-- <input type="email" ngModel name="class" class="form-control" id="class" placeholder="Class" required> -->
-         <input list="classes" ngModel name="class" placeholder="Class" required>
+         <input list="classes" ngModel name="class" placeholder="Class">
             <datalist id="classes" >
             <option value="Economy">
             <option value="Compact">
@@ -48,6 +48,21 @@
          <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary" >Find</button>
       </div>
     </form>
+    <div>
+      <b>Order by Price</b>
+      <label class="switch" id="price-switch">
+        <input type="checkbox" [(ngModel)]="priceSwitch" (change)="onPriceSwitch($event)">
+        <span class="slider round"></span>
+      </label>
+    </div>
+    <div>
+      <b>Order by Class</b>
+      <label class="switch" id="class-switch" >
+        <input type="checkbox" [(ngModel)]="classSwitch" (change)="onClassSwitch($event)">
+        <span class="slider round" (click)="onClassSwitch(addForm)"></span>
+      </label>
+    </div>
+
   </div>
 
   <div class="column middle" style="background-color:#ffffff28">
@@ -55,7 +70,7 @@
 
   <div class="column right" style="background-color:#4e4d5333;">
     <div class="row">
-      <div *ngFor="let car of cars" class="col-md-6 col-xl-4">
+      <div *ngFor="let car of cars" class="col-md-6 col-xl-5">
         <div class="card">
            <div class="card-body row">
               <div class="col-6">
@@ -67,9 +82,9 @@
               </div>
            </div>
            <ul class="list-group list-group-flush">
-             <li class="list-group-item"><i class="fa fa-birthday-cake float-right"></i>Birthday</li>
-              <li class="list-group-item"><i class="fa fa-envelope float-right"></i>Email</li>
-              <li class="list-group-item"><i class="fa fa-phone float-right"></i>Phone : </li>
+             <li class="list-group-item"><i class="fa fa-paint-brush float-right"></i>Color: {{car?.color}}</li>
+              <li class="list-group-item"><i class="fa fa-car float-right"></i>Class: {{car?.carClass}}</li>
+              <li class="list-group-item"><i class="fa fa-cogs float-right"></i>Description: </li>
            </ul>
            <div class="card-body">
               <div class="float-right btn-group btn-group-sm">
