@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Car } from './car';
 import { CarService } from './car.service';
 
@@ -29,5 +30,9 @@ export class AppComponent {
         alert(error.message);
       }
     )
+  }
+
+  public onAddReservation(addForm: NgForm): void{
+
   }
 }
