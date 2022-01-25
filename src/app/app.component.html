@@ -9,32 +9,33 @@
            <!-- <a (click)="onOpenModal(null, 'add')" class="nav-link" > Add Employee <span class="sr-only">(current)</span></a> -->
         </li>
      </ul>
-     <form class="form-inline my-2 my-lg-0">
-        <!-- <input type="search" (ngModelChange)="searchEmployees(key.value)" #key="ngModel" ngModel -->
-         <!-- name="key" id="searchName" class="form-control mr-sm-2" placeholder="Search employees..." required> -->
+     <form #findForm="ngForm" class="form-inline my-2 my-lg-0">
+        <input type="search" (ngSubmit)="searchReservation(key.value)" #key="ngModel" ngModel
+         name="key" id="searchName" class="form-control mr-sm-2" placeholder="Search reservation.." required>
+         <button [disabled]="findForm.invalid" type="submit" class="btn btn-primary" >Find</button>
      </form>
   </div>
 </nav>
 <div class="container" id="main-container">
 <!-- <div class="row"> -->
   <div class="column left" style="background-color:#a8a8a8;">
-    <form #addForm="ngForm" (ngSubmit)="onAddReservation(addForm)">
+    <form #addForm="ngForm" (ngSubmit)="onFindAvailable(addForm)">
       <div class="form-group">
-         <label for="name"><b>Name</b></label>
-         <input type="text" ngModel name="name" class="form-control" id="name" placeholder="Name" required>
+         <label for="name"><h5><b>Search</b></h5></label>
+         <label>Please enter your search terms</label>
       </div>
       <div class="form-group">
           <label for="birthday"><b>Pickup Date</b></label>
-          <input type="date" ngModel name="pickupDate" class="form-control" id="pickupDate" placeholder="PickupDate" required>
+          <input type="date" [(ngModel)]="pickupDate" name="pickupDate" class="form-control" id="pickupDate" placeholder="PickupDate" required>
       </div>
       <div class="form-group">
         <label for="birthday"><b>Return Date</b></label>
-        <input type="date" ngModel name="returnDate" class="form-control" id="returnDate" placeholder="ReturnDate" required>
+        <input type="date" [(ngModel)]="returnDate" name="returnDate" class="form-control" id="returnDate" placeholder="ReturnDate" required>
      </div>
       <div class="form-group">
          <label for="class"><b>Car Class</b></label>
          <!-- <input type="email" ngModel name="class" class="form-control" id="class" placeholder="Class" required> -->
-         <input list="classes" ngModel name="class" placeholder="Class">
+         <input list="classes" [(ngModel)]="carClass" ngModel name="class" placeholder="Class">
             <datalist id="classes" >
             <option value="Economy">
             <option value="Compact">
@@ -47,8 +48,8 @@
          <!-- <button type="button" id="add-employee-form" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
          <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary" >Find</button>
       </div>
-    </form>
-    <div>
+   </form>
+   <div>
       <b>Order by Price</b>
       <label class="switch" id="price-switch">
         <input type="checkbox" [(ngModel)]="priceSwitch" (change)="onPriceSwitch($event)">
@@ -59,7 +60,7 @@
       <b>Order by Class</b>
       <label class="switch" id="class-switch" >
         <input type="checkbox" [(ngModel)]="classSwitch" (change)="onClassSwitch($event)">
-        <span class="slider round" (click)="onClassSwitch(addForm)"></span>
+        <span class="slider round"></span>
       </label>
     </div>
 

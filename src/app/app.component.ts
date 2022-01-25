@@ -13,6 +13,9 @@ export class AppComponent {
   title = 'carrentalapp';
   priceSwitch: boolean = true;
   classSwitch: boolean = true;
+  pickupDate: string = '';
+  returnDate: string = '';
+  carClass: string = '';
 
   public cars: Car[] = [];
   // public editCar: Car;
@@ -34,36 +37,56 @@ export class AppComponent {
     )
   }
 
-  public onAddReservation(addForm: NgForm): void {
+  public onFindAvailable(findForm: NgForm): void{
+    console.log(this.pickupDate);
+    console.log(this.returnDate);
+    console.log(this.carClass);
+    console.log(findForm.value);
+    
+    this.carService.getAvailableCars(this.pickupDate, this.returnDate, this.carClass,this.priceSwitch).subscribe(
+      (response: Car[]) => {
+        console.log(response);
+        this.cars = response;
+        // addForm.reset();
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+        // addForm.reset();
+      }
+    );
+  }
+
+  public searchReservation(key: string): void{
+    console.log(key);
   }
 
   public onPriceSwitch(event: any): void {
     console.log(event);
-    this.carService.getAllCars(this.priceSwitch,this.classSwitch).subscribe(
-      (response: Car[]) => {
-        console.log(response);
-        this.cars = response;
-        // addForm.reset();
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-        // addForm.reset();
-      }
-    );
+    // this.carService.getAvailableCars(this.pickupDate, this.returnDate, this.carClass,this.priceSwitch).subscribe(
+    //   (response: Car[]) => {
+    //     console.log(response);
+    //     this.cars = response;
+    //     // addForm.reset();
+    //   },
+    //   (error: HttpErrorResponse) => {
+    //     alert(error.message);
+    //     // addForm.reset();
+    //   }
+    // );
   }
 
   public onClassSwitch(event: any): void {
     console.log(event);
-    this.carService.getAllCars(this.priceSwitch,this.classSwitch).subscribe(
-      (response: Car[]) => {
-        console.log(response);
-        this.cars = response;
-        // addForm.reset();
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-        // addForm.reset();
-      }
-    );
+    // this.carService.getAvailableCars(this.pickupDate, this.returnDate, this.carClass,this.priceSwitch).subscribe(
+    //   (response: Car[]) => {
+    //     console.log(response);
+    //     this.cars = response;
+    //     // addForm.reset();
+    //   },
+    //   (error: HttpErrorResponse) => {
+    //     alert(error.message);
+    //     // addForm.reset();
+    //   }
+    // );
   }
 }
