@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Car } from './car';
 import { CarService } from './car.service';
+import { Reservation } from './reservation';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,7 @@ export class AppComponent {
   pickupDate: string = '';
   returnDate: string = '';
   carClass: string = '';
+  public reservation: Reservation;
 
   public cars: Car[] = [];
   // public editCar: Car;
@@ -58,6 +60,17 @@ export class AppComponent {
 
   public searchReservation(key: string): void{
     console.log(key);
+    this.carService.getReservationById(key).subscribe(
+      (response: Reservation) => {
+        console.log(response);
+        this.reservation = response;
+        // addForm.reset();
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+        // addForm.reset();
+      }
+    );
   }
 
   public onPriceSwitch(event: any): void {
