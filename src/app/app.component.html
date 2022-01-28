@@ -113,11 +113,12 @@
                <ul class="list-group list-group-flush">
                  <li class="list-group-item"><i class="fa fa-paint-brush float-right"></i>Color: {{car?.color}}</li>
                   <li class="list-group-item"><i class="fa fa-car float-right"></i>Class: {{car?.carClass}}</li>
-                  <li class="list-group-item"><i class="fa fa-cogs float-right"></i>Description: </li>
+                  <li class="list-group-item"><i class="fa fa-cogs float-right"></i>Overall price: {{calculatePrice(car.pricePerDay)}} </li>
                </ul>
                <div class="card-body">
                   <div class="float-right btn-group btn-group-sm">
-                     <a class="btn btn-primary tooltips" data-placement="top" data-original-title="Edit"><i class="fa fa-pencil"></i> </a>
+                     <!-- <a class="btn btn-primary tooltips" (click)="onBookCar(car)" data-placement="top" data-original-title="Edit"><i class="fa fa-pencil"></i> </a> -->
+                     <button [disabled]="addForm.invalid" (click)="onBookCar(car)" type="submit" class="btn btn-primary" >Book</button>
                   </div>
                </div>
             </div>

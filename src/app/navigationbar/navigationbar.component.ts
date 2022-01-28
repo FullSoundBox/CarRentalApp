@@ -12,7 +12,7 @@ import { DialogBodyComponent } from "../dialog-body/dialog-body.component";
 })
 export class NavigationBar{
     reservationService: ReservationService;
-    reservation: Reservation;
+    reservation: Reservation = {};
 
     constructor(private matDialog: MatDialog){}
 
@@ -30,7 +30,20 @@ export class NavigationBar{
 
     openDialog() {
         const dialogConfig = new MatDialogConfig();
-        dialogConfig.data = "some data";
+
+        this.reservation.id = 1;
+        this.reservation.pickupDate = '2022-01-01';
+        this.reservation.returnDate = '2022-01-31';
+        this.reservation.amount = 1000;
+
+        const reservationData = `
+        Reservation Id: ${this.reservation.id} '\n'
+        Reservation PickupDate: ${this.reservation.pickupDate} '\n'
+        Reservation ReturnDate: ${this.reservation.returnDate} '\n'
+        Reservation Amount: ${this.reservation.amount}
+        `;
+
+        dialogConfig.data = reservationData;
         this.matDialog.open(DialogBodyComponent, dialogConfig);
     }
 }
