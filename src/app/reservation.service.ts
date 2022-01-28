@@ -21,7 +21,6 @@ export class ReservationService {
   }
 
   public newReservation(reservation: Reservation):Observable<Reservation>{
-    return this.http.post<any>(`${this.apiServerUrl}/reservation/add/${reservation.id}`,reservation);
+    return this.http.post<any>(`${this.apiServerUrl}/reservation/add`,reservation);
   }
-  
 }

@@ -153,7 +153,14 @@ export class AppComponent {
         dialogRef.afterClosed().subscribe(value => {
           // console.log(`Dialog sent: ${value}`); 
           if (value){
-            this.reservationService.newReservation(this.reservation);
+            this.reservationService.newReservation(this.reservation).subscribe(
+              (response: Reservation) => {
+                console.log(response);
+              },
+              (error: HttpErrorResponse) => {
+                alert(error.message);
+              }
+            );
           }
         });
   }
