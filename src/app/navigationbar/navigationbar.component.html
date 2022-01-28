@@ -12,7 +12,7 @@
        <form #findForm="ngForm" class="form-inline my-2 my-lg-0">
           <input type="search" #key="ngModel" ngModel
            name="key" id="searchName" class="form-control mr-sm-2" placeholder="Search reservation.." required>
-           <button [disabled]="findForm.invalid" type="submit" class="btn btn-primary" (click)="openDialog()">Find</button>
+           <button [disabled]="findForm.invalid" type="submit" class="btn btn-primary" (click)="openDialog(key.value)">Find</button>
        </form>
     </div>
 </nav>

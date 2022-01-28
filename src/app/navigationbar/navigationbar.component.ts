@@ -11,35 +11,41 @@ import { DialogBodyComponent } from "../dialog-body/dialog-body.component";
     templateUrl: './navigationbar.component.html'
 })
 export class NavigationBar{
-    reservationService: ReservationService;
-    reservation: Reservation = {};
+    reservation: Reservation;
 
-    constructor(private matDialog: MatDialog){}
+    constructor(private reservationService: ReservationService, private matDialog: MatDialog){}
 
-    public getReservation(key: string):Reservation{     
+    ngOnInit(){
+        this.reservation = {id: 0, amount: 0, pickupDate: '', returnDate: '', carId: 0,customerId: 0, reservationStatus: ''}
+    }
+
+    public getReservation(key: string):void{     
         this.reservationService.getReservationById(key).subscribe(
             (response: Reservation) => {
+                console.log(response);
+                //   console.log(this.reservation);
               this.reservation = response;
+            
             },
             (error: HttpErrorResponse) => {
               alert(error.message);
             }
         );
-    return this.reservation;
     }
 
-    openDialog() {
+    openDialog(key: string) {
         const dialogConfig = new MatDialogConfig();
+        this.getReservation(key);
 
-        this.reservation.id = 1;
-        this.reservation.pickupDate = '2022-01-01';
-        this.reservation.returnDate = '2022-01-31';
-        this.reservation.amount = 1000;
+        // this.reservation.id = 1;
+        // this.reservation.pickupDate = '2022-01-01';
+        // this.reservation.returnDate = '2022-01-31';
+        // this.reservation.amount = 1000;
 
         const reservationData = `
-        Reservation Id: ${this.reservation.id} '\n'
-        Reservation PickupDate: ${this.reservation.pickupDate} '\n'
-        Reservation ReturnDate: ${this.reservation.returnDate} '\n'
+        Reservation Id: ${this.reservation.id}
+        Reservation PickupDate: ${this.reservation.pickupDate}
+        Reservation ReturnDate: ${this.reservation.returnDate}
         Reservation Amount: ${this.reservation.amount}
         `;
 

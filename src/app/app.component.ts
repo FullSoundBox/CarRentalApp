@@ -6,6 +6,7 @@ import { CarService } from './car.service';
 import { DialogBodyComponent } from './dialog-body/dialog-body.component';
 import { Reservation } from './reservation';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { ReservationService } from './reservation.service';
 
 
 @Component({
@@ -29,11 +30,12 @@ export class AppComponent {
   // public editCar: Car;
   
   constructor(private carService: CarService,
+    private reservationService: ReservationService,
     private matDialog: MatDialog){}
 
   ngOnInit(){
     this.getCars();
-    this.reservation = {id: 0, amount: 0, pickupDate: '', returnDate: '', carId: 0,customerId: 0}
+    this.reservation = {id: 0, amount: 0, pickupDate: '', returnDate: '', carId: 0,customerId: 0, reservationStatus: '' }
   }
 
   public getCarService():CarService{ return this.carService; }
@@ -128,21 +130,37 @@ export class AppComponent {
     const dialogConfig = new MatDialogConfig();
       this.selectedCar = selected;
         const reservationData = `
+        Reservation Id; ${this.reservation.id}
         Car Id: ${this.selectedCar.carId}
         ${this.selectedCar.brand} ${this.selectedCar.model}
         Price Per Day: ${this.selectedCar.pricePerDay}
         Pickup Date: ${this.pickupDate}
-        Retrun Date: ${this.returnDate}
+        Return Date: ${this.returnDate}
         Total Amount: ${this.reservation.amount}
         `;
         // Total Amount: ${this.reservation.amount}
 
         dialogConfig.data = reservationData;
-        this.matDialog.open(DialogBodyComponent, dialogConfig);
+        // dialogConfig.data = {reserv: {
+        //   id: 1,
+        //   pickupDate: this.pickupDate,
+        //   returnDate: this.returnDate,
+        //   amount: this.totalAmount
+        // }};
+        
+        const dialogRef = this.matDialog.open(DialogBodyComponent, dialogConfig);
+        dialogRef.componentInstance.bookingCar = true;
+        dialogRef.afterClosed().subscribe(value => {
+          // console.log(`Dialog sent: ${value}`); 
+          if (value){
+            this.reservationService.newReservation(this.reservation);
+          }
+        });
   }
 
   onBookCar(selected: Car){
     // console.log(selectedCar)
+    this.reservation.id = 13
     this.reservation.carId = selected.carId;
     this.reservation.amount = this.calculatePrice(selected.pricePerDay);
     this.reservation.pickupDate = this.pickupDate;

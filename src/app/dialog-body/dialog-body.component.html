@@ -1,10 +1,17 @@
 <h2 mat-dialog-title>Reservation Info</h2>
 
 <mat-dialog-content>
-
+<!-- <div *ngIf="bookingCar; else elseBlock">
+    <p>{{data.id}}</p>
+    <p>{{data.pickupDate}}</p>
+    <p>{{data.returnDate}}</p>
+    <p>{{data.amount}}</p>
+</div>
+<ng-template #elseBlock><p> {{data}}</p></ng-template> -->
 <p> {{data}}</p>
 </mat-dialog-content>
 
 <mat-dialog-actions>
     <button class="mat-raised-button" (click)="close()">Close</button>
+    <button class="mat-raised-button" [hidden]="!bookingCar" (click)="bookCar()">Accept</button>
 </mat-dialog-actions>
