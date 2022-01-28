@@ -8,11 +8,16 @@ import { Reservation } from './reservation';
   providedIn: 'root'
 })
 export class ReservationService {
-  private apiServerUrl = environment.apiBaseUrl;
+  public apiServerUrl = environment.apiBaseUrl;
 
   constructor(private http: HttpClient) {}
+
   public getReservations():Observable<Reservation[]>{
     return this.http.get<any>(`${this.apiServerUrl}/reservation/all`);
+  }
+
+  public getReservationById(id: string):Observable<Reservation>{
+    return this.http.get<any>(`${this.apiServerUrl}/reservation/${id}`);
   }
   
 }
